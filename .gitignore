@@ -1,3 +1,4 @@
 record
 main.py
+upload.py
 *.pyc

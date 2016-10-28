@@ -1,12 +1,12 @@
 import gym
-import lib
+import algorithm
 
 env = gym.make('Taxi-v1')
 env.monitor.start('record', force = 'True')
 
-observation_cnt = lib.discrete_cnt(env.observation_space)
-action_cnt = lib.discrete_cnt(env.action_space)
-trainer = lib.q_learning(observation_cnt, action_cnt)
+observation_cnt = env.observation_space.n
+action_cnt = env.action_space.n
+trainer = algorithm.QLearning(observation_cnt, action_cnt)
 
 epsilon = 0.5
 decay = 0.99
@@ -19,8 +19,7 @@ for k in xrange(1, limit + 1):
             env.render()
 
         action = trainer.greedy(observation, epsilon)
-        true_action = lib.encode(env.action_space, action)
-        new_observation, reward, done, info = env.step(true_action)
+        new_observation, reward, done, info = env.step(action)
 
         trainer.train(observation, new_observation, action, reward)
         observation = new_observation
@@ -31,4 +30,3 @@ for k in xrange(1, limit + 1):
     epsilon *= decay
 
 env.monitor.close()
-lib.upload()
