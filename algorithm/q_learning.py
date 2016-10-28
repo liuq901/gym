@@ -11,6 +11,8 @@ class QLearning:
         for i in xrange(self.action_cnt):
             if self.q_value[observation][i] > self.q_value[observation][best]:
                 best = i
+        if abs(self.q_value[observation][best]) < 1e-10:
+            return np.random.randint(self.action_cnt)
         return best
 
     def greedy(self, observation, epsilon):
