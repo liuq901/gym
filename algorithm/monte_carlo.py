@@ -17,7 +17,7 @@ class MonteCarlo:
                     best = i
             return best
 
-    def train(self, observations, actions, rewards, gamma = 1):
+    def train(self, observations, actions, rewards, gamma = 0.25):
         assert len(observations) == len(actions) == len(rewards)
         length = len(observations)
         returns = [0.0] * length
